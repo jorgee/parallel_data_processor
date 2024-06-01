@@ -11,7 +11,7 @@ mvn clean package
 To run the code use the 'run.sh' script indicating the location of the input CSV file, the location of the output file, and the number of threads to perform the computation.
 
 ```
-run.sh <input_file> <output_file> <num_threads>
+./run.sh <input_file> <output_file> <num_threads>
 ```
 
 
