@@ -8,7 +8,7 @@ public interface DataReader {
     /**
      * Open the reader.
      */
-    public void open();
+    public void open() throws Exception;
     
     /**
      * Read the values from the reader
