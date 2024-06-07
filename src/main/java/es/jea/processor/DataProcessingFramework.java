@@ -46,10 +46,15 @@ public class DataProcessingFramework {
      */
     public void awaitTermination() throws InterruptedException{
         executorService.shutdown();
+        /*
+         * Shutdown schedules the stop once the current tasks are completed. I do not wait for the termination. 
+         * The while below is to ensure all tasks are finished and executi service shutdowns.
+         */ 
         while (!executorService.isTerminated()){
             executorService.awaitTermination(TIMEOUT, TimeUnit.SECONDS);
         }
-        
+        reader.close();;
+        writer.close();
     }
 
     /**
@@ -57,13 +62,17 @@ public class DataProcessingFramework {
      * @param args Array of arguments expected: InputFile, OutputFile, number of threads.
      */
     public static void main(String[] args) {
-        if (args.length != 4){
-            System.err.println("Incorrect number of arguments <inputFile> <outputFile> <numThreads>");
+        if (args.length < 3 || args.length > 4){
+            System.err.println("Incorrect number of arguments <inputFile> <outputFile> [<numThreads>]");
             System.exit(1);
         }
         String inputFile = args[1];
         String outputFile = args[2];
-        int threads = Integer.parseInt(args[3]);
+        int threads = Runtime.getRuntime().availableProcessors();
+        if (args.length == 4){
+            // Threads provided by the user
+            threads = Integer.parseInt(args[3]);
+        }
         DataProcessingFramework dpf = new DataProcessingFramework(new CSVDataReader(inputFile), new CSVResultsWriter(outputFile), threads );
         System.out.println("Starting processing of " + inputFile);
         dpf.start();
@@ -72,6 +81,7 @@ public class DataProcessingFramework {
         } catch (InterruptedException e) {
             System.err.println("Executor interrupted");
         }
+
         System.out.println("Processing finished");
     }
 }
