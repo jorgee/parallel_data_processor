@@ -27,16 +27,10 @@ public class CSVDataReader implements DataReader{
 
 
     @Override
-    public void open() {
-        try {
-            br = new BufferedReader(new FileReader(filename));
-            br.readLine(); //read the header line
-        } catch (FileNotFoundException e) {
-            System.err.println("File " + filename + " not found");
-        } catch (IOException e) {
-            System.err.println("Exception reading file " + filename);
-            e.printStackTrace();
-        }
+    public void open() throws Exception {
+
+        br = new BufferedReader(new FileReader(filename));
+        br.readLine(); //read the header line
         open = true;
 
         

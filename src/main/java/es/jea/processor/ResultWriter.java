@@ -6,7 +6,7 @@ public interface ResultWriter {
     /**
      * Open the writer.
      */
-     public void open();
+     public void open() throws Exception;
     
     /**
      * Writes the computations results.

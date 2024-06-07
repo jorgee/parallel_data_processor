@@ -30,7 +30,7 @@ public class DataProcessingFramework {
     /**
      * Start the processing of Data.
      */
-    public void start(){
+    public void start() throws Exception{
         reader.open();
         writer.open();
         for (int i = 0; i < this.threads; i++ ){
@@ -75,7 +75,12 @@ public class DataProcessingFramework {
         }
         DataProcessingFramework dpf = new DataProcessingFramework(new CSVDataReader(inputFile), new CSVResultsWriter(outputFile), threads );
         System.out.println("Starting processing of " + inputFile);
-        dpf.start();
+        try{
+            dpf.start();
+        }catch (Exception e){
+            System.err.println("Exception starting the processing");
+            e.printStackTrace();
+        }
         try {
             dpf.awaitTermination();
         } catch (InterruptedException e) {
