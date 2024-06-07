@@ -24,7 +24,7 @@ public class CSVResultsWriter implements ResultWriter {
     }
 
     @Override
-    public void open() {
+    public void open() throws Exception {
         bw = new BufferedWriter(new FileWriter(filename, true));
         bw.write("#sum"+separator+"#prod\n"); //write header line
         open = true;
